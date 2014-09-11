@@ -28,7 +28,7 @@
  *
  */
 
-package app {
+package {
 import app.ClientLib.CModule;
 
 import flash.display.Sprite;

@@ -76,7 +76,7 @@ if("${System.env.JENKINS_BUILD_VERSION}" != "null") {
 def binDir = new File(projectDir, '/bin')
 def buildDir = new File(projectDir, '/build')
 def reportDir = new File(projectDir, '/build/reports')
-def confDir = new File(projectDir, '/src/main/temp')
+def confDir = new File(projectDir, '/temp')
 
 //----------------------------------
 //  Tasks
@@ -101,18 +101,18 @@ task copyDeps(type: Copy) {
 
 task compile_init << {
     confDir.mkdirs()
-    ant.copy(todir: 'src/main/temp') {
-        fileset(dir : 'src/main/templates', includes: '*.*' )
+    ant.copy(todir: confDir) {
+        fileset(dir : '.', includes: '.flexConfig.xml' )
     }    
-    ant.replace(dir: "src/main/temp/", token: '${viewport_width}', value: '800')
-    ant.replace(dir: "src/main/temp/", token: '${viewport_height}', value: '600')
-    ant.replace(dir: "src/main/temp/", token: '${viewport_scale}', value: '1')
-    ant.replace(dir: "src/main/temp/", token: '${version}', value: "${version}")
-    ant.replace(dir: "src/main/temp/", token: '${debug}', value: 'true')
-    ant.replace(dir: "src/main/temp/", token: '${player_version}', value: '14.0')
-    ant.replace(dir: "src/main/temp/", token: '${swf_version}', value: '25')
-    ant.replace(dir: "src/main/temp/", token: '${assets}', value: '')
-    ant.replace(dir: "src/main/temp/", token: '${vars}', value: '')
+    ant.replace(dir: confDir, token: '${viewport_width}', value: '800')
+    ant.replace(dir: confDir, token: '${viewport_height}', value: '600')
+    ant.replace(dir: confDir, token: '${viewport_scale}', value: '1')
+    ant.replace(dir: confDir, token: '${version}', value: "${version}")
+    ant.replace(dir: confDir, token: '${debug}', value: 'true')
+    ant.replace(dir: confDir, token: '${player_version}', value: '14.0')
+    ant.replace(dir: confDir, token: '${swf_version}', value: '25')
+    ant.replace(dir: confDir, token: '${assets}', value: '')
+    ant.replace(dir: confDir, token: '${vars}', value: '')
 }
 
 task compile(type: JavaExec) { 
@@ -120,10 +120,10 @@ task compile(type: JavaExec) {
     classpath = files("${AIR_HOME}/lib/compiler.jar")
     workingDir = "${projectDir}"
     def argsList = [
-                'src/main/actionscript/Main.as',
+                'ClientLibExample.as',
                 '-debug=true',
-                '-load-config+="src/main/temp/.flexConfig.xml"',
-                '-output="build/Main.swf"'
+                '-load-config+="temp/.flexConfig.xml"',
+                '-output="build/ClientLibExample.swf"'
             ]
     def airConfig = "${AIR_HOME}" + '/frameworks/flex-config.xml'
     def loadAirConfig = '-load-config+='+"${airConfig}";
@@ -138,8 +138,8 @@ task test << {
     reportDir.mkdirs()
     ant.taskdef(resource: 'flexUnitTasks.tasks', classpath: configurations.test.asPath) 
     ant.flexunit(workingDir:'bin',toDir:'build/reports',haltonfailure:'false',verbose:'true',player:'flash',headless:'false',localTrusted:'true') {
-        source(dir: 'src/main/actionscript')
-        testSource(dir: 'src/test/actionscript') {
+        source(dir: '.')
+        testSource(dir: '.') {
            include(name: '**/*Test.as')
         }
         library(dir: 'bin')
