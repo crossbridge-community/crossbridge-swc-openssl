@@ -3,8 +3,8 @@
  * 
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 Andras Csizmadia
- * http://www.vpmedia.hu
+ * Copyright (c) 2014 The CrossBridge Team
+ * https://github.com/crossbridge-community
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,6 @@
  * =END MIT LICENSE
  *
  */
-
 package {
 import app.ClientLib.CModule;
 
