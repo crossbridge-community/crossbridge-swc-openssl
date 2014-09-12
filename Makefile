@@ -95,10 +95,10 @@ swc:
         ClientLib_wrapper.c \
         ClientLib.h \
         ClientLib.c \
-        -flto-api=temp/exports.txt -swf-version=25 -emit-swc=app.ClientLib -o publish/ClientLib.swc -lcrypto
+        -flto-api=temp/exports.txt -swf-version=26 -emit-swc=app.ClientLib -o publish/ClientLib.swc -lcrypto
 	mv ClientLib_wrapper.c temp/ClientLib_wrapper.c
 
 # Generate test SWF
 swf:
 	@echo "-------------------------------------------- SWF --------------------------------------------"
-	"$(FLASCC_AIR_ROOT)/bin/mxmlc" -swf-version=25 -library-path+=publish/ClientLib.swc ClientLibExample.as -debug=false -optimize -remove-dead-code -o build/ClientLibExample.swf
+	"$(FLASCC_AIR_ROOT)/bin/mxmlc" -advanced-telemetry -swf-version=26 -library-path+=publish/ClientLib.swc ClientLibExample.as -debug=false -optimize -remove-dead-code -o build/ClientLibExample.swf

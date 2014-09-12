@@ -73,6 +73,10 @@ public class ClientLibExample extends Sprite implements ISpecialFile {
         output.width = stage.stageWidth;
         output.height = stage.stageHeight;
         addChild(output);
+        
+        var stats:Stats = new Stats();
+        addChild(stats);
+        stats.x = 800 - stats.width;
 
         stage.frameRate = 60;
         stage.scaleMode = StageScaleMode.NO_SCALE;
