@@ -28,7 +28,7 @@
  *
  */
 package {
-import app.ClientLib.CModule;
+import crossbridge.OpenSSL.CModule;
 
 import flash.display.Sprite;
 import flash.utils.ByteArray;

@@ -60,10 +60,10 @@ all: clean swig abc obj swc swf
 clean:
 	@echo "-------------------------------------------- Clean --------------------------------------------"
 	rm -rf build/
-	rm -rf publish/
+	rm -rf release/
 	rm -rf temp/
 	mkdir -p build
-	mkdir -p publish
+	mkdir -p release
 	mkdir -p temp
 
 # Generate SWIG AS3 Wrappers
@@ -95,10 +95,10 @@ swc:
         ClientLib_wrapper.c \
         ClientLib.h \
         ClientLib.c \
-        -flto-api=temp/exports.txt -swf-version=26 -emit-swc=app.ClientLib -o publish/ClientLib.swc -lcrypto
+        -flto-api=temp/exports.txt -swf-version=26 -emit-swc=crossbridge.OpenSSL -o release/crossbridge-openssl.swc -lcrypto
 	mv ClientLib_wrapper.c temp/ClientLib_wrapper.c
 
 # Generate test SWF
 swf:
 	@echo "-------------------------------------------- SWF --------------------------------------------"
-	"$(FLASCC_AIR_ROOT)/bin/mxmlc" -advanced-telemetry -swf-version=26 -library-path+=publish/ClientLib.swc Main.as -debug=false -optimize -remove-dead-code -o build/Main.swf
+	"$(FLASCC_AIR_ROOT)/bin/mxmlc" -advanced-telemetry -swf-version=26 -library-path+=release/crossbridge-openssl.swc Main.as -debug=false -optimize -remove-dead-code -o build/Main.swf

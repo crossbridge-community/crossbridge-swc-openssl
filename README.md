@@ -1,4 +1,4 @@
-crossbridge-example-openssl
-===========================
+crossbridge-swc-openssl
+=======================
 
-OpenSSL example for CrossBridge SDK
+[![Build Status](https://travis-ci.org/crossbridge-community/crossbridge-swc-openssl.svg?branch=master)](https://travis-ci.org/crossbridge-community/crossbridge-swc-openssl)

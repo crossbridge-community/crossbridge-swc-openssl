@@ -28,8 +28,8 @@
  *
  */
 package {
-import app.ClientLib.CModule;
-import app.ClientLib.vfs.ISpecialFile;
+import crossbridge.OpenSSL.CModule;
+import crossbridge.OpenSSL.vfs.ISpecialFile;
 
 import flash.display.Sprite;
 import flash.display.StageScaleMode;
