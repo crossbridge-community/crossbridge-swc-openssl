@@ -41,7 +41,7 @@ import flash.utils.ByteArray;
  * ClientLib Example
  */
 [SWF(width="1024", height="768", frameRate="60", backgroundColor="#FFFFFF")]
-public class ClientLibExample extends Sprite implements ISpecialFile {
+public class Main extends Sprite implements ISpecialFile {
     /**
      * @private
      */
@@ -54,7 +54,7 @@ public class ClientLibExample extends Sprite implements ISpecialFile {
     /**
      * Constructor
      */
-    public function ClientLibExample() {
+    public function Main() {
         CModule.rootSprite = this;
         CModule.throwWhenOutOfMemory = true;
         CModule.vfs.console = this;

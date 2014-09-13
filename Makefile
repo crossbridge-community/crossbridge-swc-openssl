@@ -101,4 +101,4 @@ swc:
 # Generate test SWF
 swf:
 	@echo "-------------------------------------------- SWF --------------------------------------------"
-	"$(FLASCC_AIR_ROOT)/bin/mxmlc" -advanced-telemetry -swf-version=26 -library-path+=publish/ClientLib.swc ClientLibExample.as -debug=false -optimize -remove-dead-code -o build/ClientLibExample.swf
+	"$(FLASCC_AIR_ROOT)/bin/mxmlc" -advanced-telemetry -swf-version=26 -library-path+=publish/ClientLib.swc Main.as -debug=false -optimize -remove-dead-code -o build/Main.swf
