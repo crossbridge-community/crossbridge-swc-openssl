@@ -40,7 +40,7 @@ import flash.utils.ByteArray;
 /**
  * ClientLib Example
  */
-[SWF(width="1024", height="768", frameRate="60", backgroundColor="#FFFFFF")]
+[SWF(width="800", height="600", backgroundColor="#999999", frameRate="60")]
 public class Main extends Sprite implements ISpecialFile {
     /**
      * @private
