@@ -26,25 +26,11 @@
 # =END MIT LICENSE
 #
 
-# Purpose: CrossBridge SWC Library Makefile
 # Author: Andras Csizmadia
-# Version: 1.0.0
-# Platform: Windows
-# Runtime: Cygwin with FlasCC
 
-# @see: http://www.adobe.com/devnet-docs/flascc/README.html
-
-# FlashCC SDK root
-FLASCC:=$(FLASCC_ROOT)/sdk
-
-# ASC2 Compiler arguments
-$?AS3COMPILERARGS=java $(JVMARGS) -jar $(call nativepath,$(FLASCC)/usr/lib/asc2.jar) -merge -md
-
-# C/C++ Compiler arguments
-CCOMPARGS:=-Wall -Wextra -Wno-write-strings -Wno-trigraphs -O4 -jvmopt=-Xmx1G
-
-# Path helper
+# Detect host 
 $?UNAME=$(shell uname -s)
+#$(info $(UNAME))
 ifneq (,$(findstring CYGWIN,$(UNAME)))
 	$?nativepath=$(shell cygpath -at mixed $(1))
 	$?unixpath=$(shell cygpath -at unix $(1))
@@ -52,6 +38,24 @@ else
 	$?nativepath=$(abspath $(1))
 	$?unixpath=$(abspath $(1))
 endif
+
+# CrossBridge SDK Home
+ifneq "$(wildcard $(call unixpath,$(FLASCC_ROOT)/sdk))" ""
+ $?FLASCC:=$(call unixpath,$(FLASCC_ROOT)/sdk)
+else
+ $?FLASCC:=/path/to/crossbridge-sdk/
+endif
+$?ASC2=java -jar $(call nativepath,$(FLASCC)/usr/lib/asc2.jar) -merge -md -parallel
+
+# Auto Detect AIR/Flex SDKs
+ifneq "$(wildcard $(AIR_HOME)/lib/compiler.jar)" ""
+ $?FLEX=$(AIR_HOME)
+else
+ $?FLEX:=/path/to/adobe-air-sdk/
+endif
+
+# C/CPP Compiler
+CCOMPARGS:=-Wall -Wextra -Wno-write-strings -Wno-trigraphs -O4
   
 # Default make target
 all: clean swig abc obj swc swf
@@ -74,7 +78,7 @@ swig:
 # Generate ABC ByteCode
 abc:
 	@echo "-------------------------------------------- ABC --------------------------------------------"
-	$(AS3COMPILERARGS) -abcfuture -AS3 \
+	$(ASC2) -abcfuture -AS3 \
 				-import $(call nativepath,$(FLASCC)/usr/lib/builtin.abc) \
 				-import $(call nativepath,$(FLASCC)/usr/lib/playerglobal.abc) \
 				ClientLib.as
@@ -101,4 +105,4 @@ swc:
 # Generate test SWF
 swf:
 	@echo "-------------------------------------------- SWF --------------------------------------------"
-	"$(FLASCC_AIR_ROOT)/bin/mxmlc" -advanced-telemetry -swf-version=26 -library-path+=release/crossbridge-openssl.swc src/main/actionscript/Main.as -debug=false -optimize -remove-dead-code -o build/Main.swf
+	"$(FLEX)/bin/mxmlc" -advanced-telemetry -swf-version=26 -library-path+=release/crossbridge-openssl.swc src/main/actionscript/Main.as -debug=false -optimize -remove-dead-code -o build/Main.swf
