@@ -67,19 +67,14 @@ extern "C" {
 //  API
 //----------------------------------
 
-void testOpenSSL();
+void selfTest();
+
+//----------------------------------
+//  Hack
+//----------------------------------
+
 // stub method do prevent undefined _connect OpenSSL error
 void connect();
-
-/**
- * Returns the payload to the flash client.
- *
- * @param out Pointer to a Pointer of a Flash String
- * @param outsize Pointer to Flash Integer (String Length)
- *
- * @return void
- */
-void getPayload(char** out, int* outsize);
 
 //----------------------------------
 //  CPP End

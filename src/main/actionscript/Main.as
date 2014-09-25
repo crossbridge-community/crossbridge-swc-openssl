@@ -85,7 +85,7 @@ public class Main extends Sprite implements ISpecialFile {
         addEventListener(Event.ENTER_FRAME, enterFrame);
 
         // test
-        ClientLib.testOpenSSL();
+        ClientLib.selfTest();
     }
         
      

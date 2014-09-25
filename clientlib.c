@@ -47,20 +47,27 @@
 #include <string.h>
 
 #include <openssl/conf.h>
-#include <openssl/evp.h>
+#include <openssl/bio.h>
+#include <openssl/buffer.h>
 #include <openssl/err.h> // Error reporting
+#include <openssl/evp.h>
+#include <openssl/objects.h>
+
+#include <openssl/aes.h>
+#include <openssl/blowfish.h>
+#include <openssl/des.h>
+#include <openssl/hmac.h>
+#include <openssl/md5.h>
+#include <openssl/rand.h>
+#include <openssl/rc4.h>
+#include <openssl/rsa.h>
 #include <openssl/sha.h>
 
 #include "clientlib.h"
 
 //----------------------------------
-//  Constants
+//  Private
 //----------------------------------
-
-/**
- * @private
- */
-#define PAYLOAD "HelloWorld";
 
 //----------------------------------
 //  API
@@ -69,7 +76,7 @@
 /**
  * @see clientlib.h 
  */
-void testOpenSSL(){  
+void selfTest(){  
   ERR_load_crypto_strings();
   OpenSSL_add_all_algorithms();
   OPENSSL_config(NULL);
@@ -90,13 +97,4 @@ void testOpenSSL(){
 
 void connect() {
     // stub
-}
-
-/**
- * @see clientlib.h 
- */
-void getPayload(char** out, int* outsize){
-    char* version = PAYLOAD;
-    *out = version;
-    *outsize = strlen(version);
 }
